@@ -37,8 +37,8 @@ module.exports = [
         checkName: locator.missingInputAlert
     },
     {
-        //Bỏ trống mật khẩu và tên đăng nhập,
-        testcaseName: "Testcase: bỏ trống mật khẩu và tên đăng nhập",
+        //Bỏ trống tên đăng nhập,
+        testcaseName: "Testcase: bỏ trống tên đăng nhập",
         username: "",
         password: "abc",
         checkName: locator.missingInputAlert
@@ -65,10 +65,10 @@ module.exports = [
         checkName: locator.breadcrumb
     },
     {
-        //đăng nhập thành công,
-        testcaseName: "Testcase: Đăng nhập thành công",
+       //Tên đăng nhập không tồn tại
+        testcaseName: "Testcase: Tài khoản không tồn tại",
         username: "admin",
         password: "Admin@gmail1",
-        checkName: locator.breadcrumb
+        checkName: locator.loginFailedAlert
     }
 ]

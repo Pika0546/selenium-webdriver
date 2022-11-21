@@ -1,18 +1,20 @@
 const { describe, it, after, before } = require('mocha');
-const Page = require('../lib/homePage');
+const Page = require('../lib/pimPage');
 
 const chai = require('chai');
 const expect = chai.expect;
 const chaiAsPromised = require('chai-as-promised');
-const loginLocator = require('../testcase/login/locator')
-const loginTestcases = require('../testcase/login/testcase')
+const deleteEmployeeLocator = require('../testcase/deleteEmployee/locator')
+const deleteEmployeeTestcase = require('../testcase/deleteEmployee/testcase.json')
+const account = require('../config/login')
+
 chai.use(chaiAsPromised);
 
 process.on('unhandledRejection', () => {});
 
 (async function example() {
     try {
-        describe ('Orange login test', async function () {
+        describe ('Orange delete employee test', async function () {
             this.timeout(50000);
             let driver, page;
 
@@ -20,17 +22,17 @@ process.on('unhandledRejection', () => {});
                 page = new Page();
                 driver = page.driver;
                 await page.visit('http://localhost/orangehrm-5.1/web/index.php/auth/login');
+                await page.login(account.username, account.password);
             });
 
             afterEach (async () => {
                 await page.quit();
             });
-            const n = loginTestcases.length;
+            const n = deleteEmployeeTestcase.length;
             for(let i = 0 ; i< n ;i++){
-                it (loginTestcases[i].testcaseName, async () => {
-                    const result = await page.findInputAndButton();
-                    const loginResult = await page.submitAndGetResult(loginTestcases[i].checkName, loginTestcases[i]);
-                    expect(loginResult.length).to.be.above(1);
+                it ("Xóa nhân viên: " + deleteEmployeeTestcase[i], async () => {
+                    const deleteResult = await page.deleteEmployee(deleteEmployeeTestcase[i]);
+                    expect(deleteResult.length).to.be.above(1);
                 });
             }
         });

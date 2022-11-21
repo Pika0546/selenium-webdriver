@@ -1,42 +1,110 @@
-# [Automated Testing With Node.js And Selenium Webdriver](https://medium.com/@bmshamsnahid/automated-testing-with-selenium-webdriver-and-node-js-f99f64720352)
+# Cách chạy project
+1. ```yarn install``` hoặc ```npm install```
+2. ```yarn test``` hoặc ```npm run test```
 
-Automated google search operation.
 
-[Step By Step Tutorial](https://medium.com/@bmshamsnahid/automated-testing-with-selenium-webdriver-and-node-js-f99f64720352)
+# Các chức năng được test:
 
-## Run application
-Clone the repository
+## Xóa nhân viên
+Testcase: dữ liệu là một file json chứa một mảng ID của 10 nhân viên
+```json
+[
+    "000001",
+    "000002",
+    "000003",
+    "000004",
+    "000005",
+    "000006",
+    "000007",
+    "000008",
+    "000009",
+    "000010"
+]
+```
+Các testcase này được pass khi có một thông báo success xuất hiện
+## Đăng nhập
+Testcase:
+```js
+ {
+        //Tên đăng nhập không tồn tại
+        testcaseName: "Testcase: Tài khoản không tồn tại",
+        username: "pikachu",
+        password: "pikachu",
+        checkName: locator.loginFailedAlert
+        //Pass khi: có thông báo đăng nhập thất bại
+    },
+    {
+        //Tên đăng nhập không tồn tại
+        testcaseName: "Testcase: Tài khoản không tồn tại",
+        username: "abc",
+        password: "abcsdasd",
+        checkName: locator.loginFailedAlert
+        //Pass khi: có thông báo đăng nhập thất bại
 
-```bash
-git clone https://github.com/bmshamsnahid/Automation-With-Selenium-And-Node.js.git
+    },
+    {
+        //Tên đăng nhập không tồn tại
+        testcaseName: "Testcase: Tài khoản không tồn tại",
+        username: "asdasdasd",
+        password: "Admin@gmail1",
+        checkName: locator.loginFailedAlert
+        //Pass khi: có thông báo đăng nhập thất bại
+    },
+    {
+        //Bỏ trống tên đăng nhập,
+        testcaseName: "Testcase: bỏ trống tên đăng nhập",
+        username: "",
+        password: "abc",
+        checkName: locator.missingInputAlert
+        //Pass khi: có thông báo username không được bỏ trống
+
+    },
+    {
+        //Bỏ trống tên mật khẩu,
+        testcaseName: "Testcase: bỏ trống tên đăng nhập",
+        username: "",
+        password: "abc",
+        checkName: locator.missingInputAlert
+        //Pass khi: có thông báo password không được bỏ trống
+    },
+    {
+        //Bỏ trống tên đăng nhập,
+        testcaseName: "Testcase: bỏ trống tên đăng nhập",
+        username: "",
+        password: "abc",
+        checkName: locator.missingInputAlert
+        //Pass khi: có thông báo username không được bỏ trống
+    },
+    {
+        //mật khẩu không chính xác
+        testcaseName: "Testcase: Sai mật khẩu",
+        username: account.username,
+        password: "somethingwrong",
+        checkName: locator.loginFailedAlert
+    },
+    {
+        //mật khẩu không chính xác
+        testcaseName: "Testcase: Sai mật khẩu",
+        username: account.username,
+        password: "abcasdasdasdasdasd",
+        checkName: locator.loginFailedAlert
+        //Pass khi: có thông báo đăng nhập thất bại
+    },
+    {
+        //đăng nhập thành công,
+        testcaseName: "Testcase: Đăng nhập thành công",
+        username: account.username,
+        password: account.password,
+        checkName: locator.breadcrumb
+        //Pass khi: trang PIM có breadcrumb xuất hiện
+    },
+    {
+       //Tên đăng nhập không tồn tại
+        testcaseName: "Testcase: Tài khoản không tồn tại",
+        username: "admin",
+        password: "Admin@gmail1",
+        checkName: locator.loginFailedAlert
+        //Pass khi: có thông báo đăng nhập thất bại
+    }
 ```
 
-Install dependencies
-```bash
-npm i chai@4.1.2 chai-as-promised@7.1.1 chromedriver@2.41.0 faker@4.1.0 mocha@5.2.0 mochawesome@3.0.3 selenium-webdriver@4.0.0-alpha.1 --save-dev --unsafe-perm=true --allow-root
-```
-
-Run test
-```bash
-npm test
-```
-
-Folder Structure
-
-    ├── ...
-    │
-    ├── lib                         # Helper methods
-    │   ├── basePage.js             # Generic functionality for tests
-    │   └── homePage.js             # Home page testing functionality
-    │
-    ├── test                        # Test suite
-    │   └── homePage.test.js        # Testing in home page
-    │
-    ├── utils                       # Utility files for testing
-    │   ├── fakeData.js             # Generating random keyword for searching
-    │   └── locator.js              # HTML and CSS identifier for elements to test
-    ├── ...
-
-## License
-
-MIT
