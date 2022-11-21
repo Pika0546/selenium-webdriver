@@ -4,6 +4,9 @@ const Page = require('../lib/homePage');
 const chai = require('chai');
 const expect = chai.expect;
 const chaiAsPromised = require('chai-as-promised');
+const loginLocator = require('../testcase/login/locator')
+const loginTestcases = require('../testcase/login/testcase')
+
 chai.use(chaiAsPromised);
 
 process.on('unhandledRejection', () => {});
@@ -17,23 +20,20 @@ process.on('unhandledRejection', () => {});
             beforeEach (async () => {
                 page = new Page();
                 driver = page.driver;
-                await page.visit('https://www.google.com/');
+                await page.visit('http://localhost/orangehrm-5.1/web/index.php/auth/login');
             });
 
             afterEach (async () => {
                 await page.quit();
             });
-
-            it ('find the input box and google search button', async () => {
-                const result = await page.findInputAndButton();
-                expect(result.inputEnabled).to.equal(true);
-                expect(result.buttonText).to.include('Google');
-            });
-
-            it ('put keyword in search box and click search button', async () => {
-                const result = await page.submitKeywordAndGetResult();
-                expect(result.length).to.be.above(10);
-            });
+            const n = loginTestcases.length;
+            for(let i = 0 ; i< n ;i++){
+                it (loginTestcases[i].testcaseName, async () => {
+                    const result = await page.findInputAndButton();
+                    const loginResult = await page.submitAndGetResult(loginTestcases[i].checkName, loginTestcases[i]);
+                    expect(loginResult.length).to.be.above(1);
+                });
+            }
         });
     } catch (ex) {
         console.log (new Error(ex.message));
